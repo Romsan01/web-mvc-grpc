@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package todo;
+
+// The Todo service definition.
+service TodoService {
+  // Adds a new Todo
+  rpc AddTodo (TodoDTO) returns (TodoDTO);
+
+  // Updates a Todo
+  rpc UpdateTodo (TodoDTO) returns (TodoDTO);
+
+  // Deletes a Todo by ID
+  rpc DeleteTodo (TodoIdRequest) returns (DeleteTodoResponse);
+
+  // Retrieves a Todo by ID
+  rpc GetTodo (TodoIdRequest) returns (TodoDTO);
+
+  // Retrieves all Todos
+  rpc GetAllTodos (EmptyRequest) returns (TodoListResponse);
+}
+
+// A message to represent a Todo
+message TodoDTO {
+  int64 id = 1;
+  string description = 2;
+  bool completionStatus = 3;
+}
+
+// Request message for operations that need an ID
+message TodoIdRequest {
+  int64 id = 1;
+}
+
+// Response message for delete operation
+message DeleteTodoResponse {
+  bool success = 1;
+}
+
+// Response message for retrieving all Todos
+message TodoListResponse {
+  repeated TodoDTO todos = 1;
+}
+
+// Empty request message for operations that don't require any parameters
+message EmptyRequest {}
